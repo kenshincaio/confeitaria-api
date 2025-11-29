@@ -9,4 +9,5 @@ MarkupSafe==3.0.3
 packaging==25.0
 psycopg2-binary==2.9.11
 pycodestyle==2.14.0
+python-dotenv==1.2.1
 Werkzeug==3.0.6
