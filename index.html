@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integração API com JavaScript</title>
+</head>
+<body>
+
+    <h1>Testar Integração da API</h1>
+
+    <button id="carregarDados">Carregar Dados</button>
+
+    <div id="dados"></div>
+
+    <script>
+        document.getElementById('carregarDados').addEventListener('click', function() {
+            // URL da sua API (substitua pelo URL correto)
+            const apiUrl = 'http://127.0.0.1:3000/cardapio'; // Exemplo, ajuste conforme necessário
+
+            // Fazendo a requisição com fetch
+            fetch(apiUrl)
+                .then(response => response.json())  // Converte a resposta em JSON
+                .then(data => {
+                    // Exibe os dados no elemento #dados
+                    const dadosDiv = document.getElementById('dados');
+                    dadosDiv.innerHTML = '';  // Limpa o conteúdo anterior, caso haja
+
+                    // Verifica se a API retornou uma lista de itens
+                    if (Array.isArray(data)) {
+                        data.forEach(item => {
+                            // Cria um elemento para exibir o título e descrição de cada item
+                            const itemDiv = document.createElement('div');
+                            itemDiv.classList.add('item');
+                            
+                            const titulo = document.createElement('h2');
+                            titulo.textContent = item.titulo;
+                            
+                            const descricao = document.createElement('p');
+                            descricao.textContent = item.descricao;
+
+                            itemDiv.appendChild(titulo);
+                            itemDiv.appendChild(descricao);
+                            dadosDiv.appendChild(itemDiv);
+                        });
+                    } else {
+                        dadosDiv.innerHTML = '<p>Nenhum dado encontrado.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar os dados:', error);
+                    document.getElementById('dados').innerHTML = '<p>Erro ao carregar dados.</p>';
+                });
+        });
+    </script>
+
+</body>
+</html>
